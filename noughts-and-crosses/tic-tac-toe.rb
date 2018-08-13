@@ -5,7 +5,7 @@ class Game
 		@array = []
 		9.times{@array.push(" ")}
 		@turns = 0
-		order of play
+		order_of_play
 	end
 
 	def string_to_num(str)
@@ -76,63 +76,61 @@ class Game
 	end
 	
 	def order_of_play
-		play = true
-		while play
+		@play = true
+		while @play
+			puts
 			reset
 			str_array = ["a1","a2","a3","b1","b2","b3","c1","c2","c3"]
 			puts "Player 1 will be 'X', Player 2 will be 'O'"
 			puts "To select a tile, type in the name of the tile when it is your go."
 			puts "For example to select the top left tile enter 'A1' or 'a1'"
+			puts
+			
 			until game_over?
-			end
-		end
-	end
-end
-
-play = true
-while play
-	game = Game.new
-	str_array = ["a1","a2","a3","b1","b2","b3","c1","c2","c3"]
-
-	puts "Player 1 will be 'X', Player 2 will be 'O'"
-	puts "To select a tile, type in the name of the tile when it is your go."
-	puts "For example to select the top left tile enter 'A1' or 'a1'"
-	until game.game_over?
-		symbol = " "
-		if game.turns % 2 == 0
-			game.display_board
-			puts "Player 1's turn, please select an empty tile:"
-			symbol = "X"
-		else
-			game.display_board
-			puts "Player 2's turn, please select an empty tile:"
-			symbol = "O"
-		end
-		input = gets.chomp.downcase
-		valid = false
-		str_array.each_with_index do |tile, index|
-			if tile == input
-				if game.array[index] == " "
-					game.turn(index, symbol)
-					valid = true
+				symbol = " "
+				display_board
+				
+				if @turns % 2 == 0
+					puts "Player 1's turn, please select an empty tile:"
+					symbol = "X"
 				else
-					puts "This tile isn't empty"
+					puts "Player 2's turn, please select an empty tile:"
+					symbol = "O"
 				end
+				
+				puts
+				input = gets.chomp.downcase
+				valid = false
+				str_array.each_with_index do |tile, index|
+					if tile == input
+						if @array[index] == " "
+							turn(index, symbol)
+							valid = true
+						else
+							puts "This tile isn't empty"
+						end
+					end
+				end
+				
+				unless valid
+					puts "You didn't enter a valid tile"
+				end
+				puts "---------------------------------------------------"
 			end
+			display_board
+			puts "Do you want to play again?"
+			input = gets.chomp.downcase
+			if input == "yes" || input == "y" || input == "1"
+				@play = true
+			elsif input == "no" || input == "n" || input == "0"
+				@play = false
+			else
+				puts "I'll assume you want to quit then."
+				@play = false
+			end
+			
 		end
-		unless valid
-				puts "You didn't enter a valid tile."
-		end
-	end
-	game.display_board
-	puts "Do you want to play again?"
-	input = gets.chomp.downcase
-	if input == "yes" || input == "y" || input == "1"
-		play = true
-	elsif input == "no" || input == "n" || input == "0"
-		play = false
-	else
-		puts "I'll assume you want to quit then."
-		play = false
 	end
 end
+
+new_game = Game.new
