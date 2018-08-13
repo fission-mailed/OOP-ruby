@@ -5,6 +5,7 @@ class Game
 		@array = []
 		9.times{@array.push(" ")}
 		@turns = 0
+		order of play
 	end
 
 	def string_to_num(str)
@@ -65,6 +66,25 @@ class Game
 			true
 		else
 			false
+		end
+	end
+	
+	def reset
+		@array = []
+		9.times{@array.push(" ")}
+		@turns = 0
+	end
+	
+	def order_of_play
+		play = true
+		while play
+			reset
+			str_array = ["a1","a2","a3","b1","b2","b3","c1","c2","c3"]
+			puts "Player 1 will be 'X', Player 2 will be 'O'"
+			puts "To select a tile, type in the name of the tile when it is your go."
+			puts "For example to select the top left tile enter 'A1' or 'a1'"
+			until game_over?
+			end
 		end
 	end
 end
